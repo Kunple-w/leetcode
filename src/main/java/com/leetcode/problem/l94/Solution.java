@@ -1,5 +1,6 @@
 package com.leetcode.problem.l94;
 
+import java.beans.IntrospectionException;
 import java.util.*;
 
 /**
@@ -74,4 +75,51 @@ public class Solution {
         }
         return r;
     }
+
+
+    public List<Integer> inorderTraversal0(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> r = new ArrayList<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else {
+                TreeNode p = stack.pop();
+
+                r.add(p.val);
+
+                node = p.right;
+            }
+        }
+        return r;
+    }
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> integers = new ArrayList<>();
+        recursionPreOrder(root, integers);
+        return integers;
+    }
+
+    private void recursionPreOrder(TreeNode root, List<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.val);
+        recursionPreOrder(root.left, path);
+        recursionPreOrder(root.right, path);
+    }
+
+
+    private void recursionInOrder(TreeNode root, List<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        recursionInOrder(root.left, path);
+        path.add(root.val);
+        recursionInOrder(root.right, path);
+    }
+
+
 }
