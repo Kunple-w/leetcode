@@ -82,14 +82,16 @@ public class Solution {
         if (root == null) {
             return r;
         }
+        // 计算出树的高度
         int depth = bfs(root);
         TreeNode zero = new TreeNode(0);
         Queue<TreeNode> queue = new LinkedList<>();
 
         int currentDepth = 1;
+        // 计算出宽度
         int width = (int) Math.pow(2, depth) - 1;
         queue.offer(root);
-        // 初始点
+        // 索引，要放置元素的行的位置
         int idx = (width - 1) / 2;
         // 步长
         int step = width + 1;
@@ -98,6 +100,7 @@ public class Solution {
             List<String> line = initList(width);
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
+                // 设置元素
                 line.set(idx + i * step, node == zero ? "" : String.valueOf(node.val));
 
                 if (node.left != null && node.left != zero) {
@@ -111,9 +114,12 @@ public class Solution {
                     queue.offer(zero);
                 }
             }
+            // 调整索引位置
             idx = (idx - 1) >> 1;
+            // 步长调整
             step = step >> 1;
             r.add(line);
+            // 退出
             if (currentDepth++ == depth) {
                 break;
             }
@@ -121,6 +127,11 @@ public class Solution {
         return r;
     }
 
+    /**
+     * 用"" 初始化行
+     *
+     * @author wangyongxu  2020-08-28 17:00:51
+     */
     private List<String> initList(int width) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < width; i++) {
